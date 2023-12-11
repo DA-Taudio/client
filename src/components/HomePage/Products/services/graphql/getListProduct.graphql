@@ -1,0 +1,20 @@
+query getListProduct($input: GetListProductInput!) {
+  getListProduct(input: $input) {
+    products {
+      _id
+      name
+      description
+      totalSold
+      price
+      image {
+        url
+      }
+    }
+    pagination {
+      totalPage
+      currentPage
+      pageSize
+    }
+    totalItem
+  }
+}

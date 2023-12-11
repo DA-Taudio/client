@@ -1,0 +1,5 @@
+mutation confirmWhenResend($sessionId: String!, $otp: String!) {
+  confirmOtp(input: { sessionId: $sessionId, otp: $otp }) {
+    confirmed
+  }
+}

@@ -1,0 +1,18 @@
+query getMe {
+  getMe {
+    _id
+    fullName
+    phoneNumber
+    verified
+    birthday
+    address
+    email
+    gender
+    avatarId {
+      _id
+      url
+    }
+    verifyPhone
+    verifyEmail
+  }
+}
