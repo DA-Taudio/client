@@ -26,12 +26,11 @@ const CheckoutPage = () => {
 
   return (
     <div className="w-full mb-[200px]">
-      <div className="w-full h-[285px] bg-gradient-to-r from-[#020202] from-0% via-[#3d5faa] via-54% to-[#000000] to-100% relative ">
+      <div className="w-full h-[285px] bg-black relative ">
         <RowContainer>
-          <div className="w-[553px] h-[171px] absolute top-[70px]  flex flex-col">
-            <p className="text-[#FBFBFB] text-base special-font font-bold mb-2 pt-5">MUA ĐỒ GIA DỤNG THÔNG MINH</p>
-            <p className="text-[#FBFBFB] text-[30px] special-font font-bold mb-2">THÔNG TIN KHÁCH HÀNG</p>
-            <p className="text-[#FBFBFB] text-xl special-font font-semibold">
+          <div className="w-[553px] h-[171px] absolute top-[70px]  flex flex-col mt-8">
+            <p className="text-[#FBFBFB] text-[18px] special-font font-bold mb-2">THÔNG TIN CỦA BẠN</p>
+            <p className="text-[#FBFBFB] text-md special-font font-semibold">
               {user?.fullName} - {hidePartOfPhoneNumber(user?.phoneNumber)}
             </p>
 
@@ -43,26 +42,26 @@ const CheckoutPage = () => {
         <div className="w-full grid grid-cols-12 mt-4 gap-5">
           <div className="grid col-span-9">
             <div className="w-full h-[34px] mb-[30px] border-b-[0.5px] border-[#000000]">
-              <p className="mb-[2px] text-xl font-bold special-font">Giỏ Hàng CỦA BẠN</p>
+              <p className="mb-[2px] text-xl font-bold special-font">Giỏ Hàng Của Bạn</p>
             </div>
 
-            <div className="grid grid-cols-12 items-center h-[45px] pl-[24px] text-[#FBFBFB] text-xs avertaStd-bold  bg-[#4D4D4D] text-center  divide-x divide-white">
+            <div className="grid grid-cols-12 items-center h-[45px] pl-[24px] text-[#FBFBFB] text-xs font-bold  bg-[#4D4D4D] text-center  divide-x divide-white">
               <div className="col-span-3 h-full flex items-center justify-center">
-                <p className="avertaStd-bold">Hình Ảnh</p>
+                <p className="font-bold text-[16px]">Hình Ảnh</p>
               </div>
               <div className="col-span-4 h-full flex items-center justify-center">
-                <p className="avertaStd-bold">Tên Sản Phẩm</p>
+                <p className="font-bold text-[16px]">Tên Sản Phẩm</p>
               </div>
               <div className="col-span-3 h-full flex items-center justify-center">
-                <p className="avertaStd-bold"> Số lượng</p>
+                <p className="font-bold text-[16px]"> Số lượng</p>
               </div>
               <div className="col-span-2 h-full flex items-center justify-center">
-                <p className="avertaStd-bold">Đơn giá</p>
+                <p className="font-bold text-[16px]">Đơn giá</p>
               </div>
             </div>
 
             {listItem?.map((obj: any) => (
-              <div className="bg-[#F2F2F2] pl-[24px] pb-[50px] mt-[20px] pt-2" key={obj?.productId}>
+              <div className="bg-white pl-[24px] pb-[50px] mt-[20px] pt-2" key={obj?.productId}>
                 <CheckoutItem item={obj} onChangeQuantity={changeQuantity} toggleSelectItem={toggleSelectItem} />
               </div>
             ))}

@@ -49,21 +49,27 @@ const CheckoutSummary = (props: Props) => {
         <p className="mb-[2px] text-xl font-bold special-font">THÔNG TIN ĐƠN HÀNG</p>
       </div>
       <div className="flex flex-col mb-7">
-        <div className="uppercase mb-1">Địa chỉ nhận hàng</div>
-        <div className="text-red averta-semibold text-[md] text-[#e94d39] ">
+        <div className="uppercase font-bold mb-1 text-[15px]">MÃ GIẢM GIÁ</div>
+        <div className="text-red text-md  ">
+          <input type="text" name="voucher" value={''} className="p-2 w-11/12" />
+        </div>
+      </div>
+      <div className="flex flex-col mb-7 text-[15px]">
+        <div className="uppercase font-bold mb-1">Địa chỉ nhận hàng</div>
+        <div className="text-red  text-md  ">
           <input type="text" name="address" value={shippingAddress} onChange={handleChange} className="p-2 w-11/12" />
         </div>
       </div>
 
       <div className="flex justify-between">
-        <div className="uppercase">Tổng thanh toán</div>
-        <div className="text-red averta-semibold text-[md] text-[#DC0000]">
+        <div className="uppercase font-bold">Tổng thanh toán</div>
+        <div className=" bg-white px-5 font-bold text-[md] text-[#DC0000]">
           {formatPrice(total)}
           <span className="text-xs underline">đ</span>
         </div>
       </div>
       <div className="flex flex-col mt-5">
-        <div className="flex uppercase border-b-2 special-font font-[700] text-[#4D4D4D]">Xác nhận thanh toán</div>
+        <div className="flex uppercase border-b-2 special-font font-[700] text-[#4D4D4D] ">Xác nhận thanh toán</div>
       </div>
       <div className="flex flex-col gap-3 mt-3">
         <div className="flex justify-between ">
@@ -96,8 +102,8 @@ const CheckoutSummary = (props: Props) => {
         </div>
       </div>
       {paymentMethod === PaymentMethod.Online && (
-        <div className="flex flex-col mt-5 mr-10">
-          <div className="uppercase mb-2">Hình thức thanh toán</div>
+        <div className="flex flex-col mt-5 mr-10 bg-white px-5 py-2">
+          <div className="font-bold mb-2">Phương thức thanh toán</div>
           <div className="flex flex-col ">
             <div className="flex items-center gap-2 mb-2 justify-between">
               <div className="flex">
@@ -139,8 +145,8 @@ const CheckoutSummary = (props: Props) => {
       )}
 
       {paymentMethod === PaymentMethod.Online && paymentProvider && (
-        <div className="flex flex-col mt-4 mr-20">
-          <div className="uppercase mb-2">Phương thức thanh toán</div>
+        <div className="flex flex-col mt-4 mr-20 bg-white py-2 px-5">
+          <div className=" font-bold mb-2">Hình thức thanh toán</div>
           <div className="flex flex-col ">
             <div className="flex items-center gap-2 mb-2 justify-between">
               <div className="flex">

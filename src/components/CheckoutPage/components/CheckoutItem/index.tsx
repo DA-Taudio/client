@@ -46,7 +46,7 @@ const CheckoutItem = (props: any) => {
             />
           </div>
           <div className="col-span-2  flex items-center justify-center  flex-col pt-4">
-            <p className="avertaStd-bold">
+            <p className="font-bold text-blue-500">
               {formatPrice(result.product?.price)}
               <span className="text-xs underline">đ</span>
             </p>

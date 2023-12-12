@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logoImage from 'public/images/logo2.jpg';
+import logoImage from 'public/images/logo2.png';
 import Image from 'next/image';
 import AuthModal from '../AuthModal';
 import LogoutModal from '../LogoutModal/logoutModal';
@@ -9,7 +9,7 @@ import { AiFillMail } from 'react-icons/ai';
 
 const FooterContainer = styled.footer`
   background-color: #000000;
-  padding: 40px;
+  padding: 25px 90px;
   text-align: center;
   img {
     width: 150px;
@@ -35,20 +35,23 @@ const Footer = () => {
 
         <div>
           <FooterText className="flex align-middle ">
-            <GiPositionMarker className="mr-2 items-center" />
+            <GiPositionMarker className="mr-2 items-center text-red-500 text-xl" />
             175 Tây Sơn, Đống Đa, Hà Nội
           </FooterText>
-          <FooterText className="flex align-middle">
-            <BsTelephoneOutboundFill className="mr-2" />
-            0368278857
+          <FooterText className="flex align-middle ">
+            <BsTelephoneOutboundFill className="mr-2 text-red-500 text-xl" />
+            0369 966 001
           </FooterText>
           <FooterText className="flex align-middle">
-            <AiFillMail className="mr-2" />
-            khiem22072001@gmail.com
+            <AiFillMail className="mr-2 text-red-500 text-xl" />
+            taudio@gmail.com
           </FooterText>
         </div>
 
-        <FooterText>© Copyright 2023 T-Audio.</FooterText>
+        <FooterText>
+          <span className="text-xl text-red-500 mr-1 ">©</span>
+          <span>Copyright 2023 T-Audio.</span>
+        </FooterText>
       </FooterContainer>
     </>
   );

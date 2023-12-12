@@ -153,7 +153,14 @@ export const AuthButton = styled(DefaultButton)<{ isLoading?: boolean }>`
   display: block;
   margin-bottom: 20px;
   margin-top: 40px;
-  background-color: #000;
+  color: #ff0097;
+  background: linear-gradient(
+    238.04deg,
+    rgba(0, 218, 255, 0.2) -32.33%,
+    rgba(128, 43, 195, 0.2) 28.78%,
+    rgba(255, 0, 151, 0.2) 67.37%,
+    rgba(246, 160, 26, 0.2) 128.48%
+  );
   :disabled {
     opacity: 0.5;
   }

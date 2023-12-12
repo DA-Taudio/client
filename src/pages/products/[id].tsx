@@ -113,7 +113,7 @@ const DetailProduct = ({ data }: Props) => {
 
   let imageUser;
   if (user?.avatarId?.url) {
-    imageUser = 'http://127.0.0.1:7007/' + user.avatarId.url;
+    imageUser = process.env.NEXT_PUBLIC_MEDIA_ENDPOINT + user.avatarId.url;
   } else {
     imageUser = '/images/account/default-avatar-image.jpg';
   }
@@ -196,7 +196,7 @@ const DetailProduct = ({ data }: Props) => {
   return (
     <DetailProductContainer>
       <Imagewrapper>
-        <ImageProduct src={'http://127.0.0.1:7007/' + product?.image.url} alt={product?.name} />
+        <ImageProduct src={process.env.NEXT_PUBLIC_MEDIA_ENDPOINT + product?.image.url} alt={product?.name} />
         <DetailOfUsers>
           <button
             onClick={() => {
@@ -291,7 +291,13 @@ const DetailProduct = ({ data }: Props) => {
           <Link href="/" onClick={submitAddToCart}>
             <BsCartPlus /> Thêm Vào Giỏ Hàng
           </Link>
-          <ButtonBuy onClick={handleBuyProduct}>Mua Ngay</ButtonBuy>
+          <ButtonBuy onClick={handleBuyProduct}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Mua Ngay
+          </ButtonBuy>
         </BuyWrapper>
       </InfoWrapper>
       {showComment && (
@@ -320,7 +326,7 @@ const DetailProduct = ({ data }: Props) => {
                   <div>
                     <ItemComment key={index} className="shadow-md bg-slate-200">
                       <ImageCommon
-                        src={`http://127.0.0.1:7007/${obj.user?.avatarId?.url}`}
+                        src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}${obj.user?.avatarId?.url}`}
                         alt="Ảnh người dùng"
                         width={500}
                         height={500}
@@ -371,7 +377,7 @@ const DetailProduct = ({ data }: Props) => {
                             <ImageCommon
                               src={
                                 item.user?.avatarId
-                                  ? `http://127.0.0.1:7007/${item.user?.avatarId?.url}`
+                                  ? `${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}${item.user?.avatarId?.url}`
                                   : '/images/account/admin.jpg'
                               }
                               alt="Ảnh người dùng"

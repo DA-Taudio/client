@@ -32,8 +32,7 @@ export const PrimaryButton = styled(Button)<{ size?: ButtonSize }>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background: linear-gradient(to right, #2b05ff, #ff0101);
-
+  background: linear-gradient(to right, pink, green);
   ${({ size }) => getButtonSize(size as ButtonSize)};
 `;
 

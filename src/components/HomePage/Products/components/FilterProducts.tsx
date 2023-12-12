@@ -27,35 +27,35 @@ const FilterProducts = ({ onFilterChange, setQuery }: IProps) => {
     onFilterChange(+price_gte, +price_lte, type_eq);
   }, [type_eq, price_gte, price_lte]);
   return (
-    <FilterWrapper className="md:mx-14 md:my-12 2xl:mx-60 2xl:my-20">
+    <FilterWrapper className="md:mx-14 md:my-5 2xl:mx-60 2xl:my-5">
       <FilterTitle>
         <input
           placeholder="Tìm kiếm sản phẩm..."
           className="border-r-2"
           onChange={(e: any) => setQuery(e.target.value)}
         ></input>
-        <Link
-          href={''}
+        <button
           onClick={() => {
             setTypeEq('');
             setShowFormType(!showFormType);
           }}
-          className="border-r-2"
+          className="border-r-2 flex items-center justify-center"
         >
-          Phân loại
+          <span className="mr-2">Phân loại</span>
           {showFormType ? <IoIosArrowUp /> : <IoIosArrowDown />}
-        </Link>
-        <Link
-          href={''}
+        </button>
+        <button
           onClick={() => {
             setPriceGte(0);
             setPriceLte(0);
             setShowFormPrice(!showFormPrice);
           }}
+          className="flex items-center justify-center"
         >
-          Giá
+          <span className="mr-2">Giá</span>
+
           {showFormPrice ? <IoIosArrowUp /> : <IoIosArrowDown />}
-        </Link>
+        </button>
       </FilterTitle>
       <div className="flex justify-end">
         <FilterDetail className="w-2/3 ">

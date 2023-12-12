@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Modal = styled.div`
-  background: rgb(0 0 0 / 80%);
+  background: rgb(0 0 0 / 50%);
   position: fixed;
   z-index: 1000;
   top: 0;
@@ -14,7 +14,7 @@ export const Container = styled.div`
   width: 58%;
   height: 620px;
   margin: auto auto;
-  background-color: #ccc;
+  background-color: #fff;
   display: flex;
   position: relative;
 `;
@@ -22,7 +22,7 @@ export const Container = styled.div`
 export const TabList = styled.ul`
   list-style-type: none;
   padding: 0;
-  background: linear-gradient(to right, #ff5555, #58c6f8);
+  background: linear-gradient(to right, green, pink);
   width: 30%;
   padding-top: 120px;
 `;
@@ -39,7 +39,7 @@ export const TabItem = styled.li<{ active: Boolean }>`
 
   font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
   background-color: ${({ active }) => (active ? '#e9e9e9' : 'transparent ')};
-  color: ${({ active }) => (active ? 'red' : '#fff')};
+  color: ${({ active }) => (active ? '#FF0097' : '#fff')};
 `;
 
 export const Content = styled.div<{ active: boolean }>`

@@ -50,7 +50,7 @@ const Order = () => {
       name: 'Danh Sách Sản Phẩm',
       cell: (row: any) => (
         <div>
-          {row.items.map((obj: any) => (
+          {row?.items?.map((obj: any) => (
             <Link href={'/products/' + obj.id._id} className="flex ư" key={obj.id._id}>
               <div className="w-2 h-2 rounded-full bg-black my-auto mr-1"> </div>
               <ImageItem src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}${obj?.id?.image?.url || ''}`} />

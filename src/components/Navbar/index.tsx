@@ -26,6 +26,14 @@ export default function Navbar() {
   const [isShowDropdown, setShowDropdown] = useState(false);
   const router = useRouter();
   const [percentTransparent, setPercentTransparent] = useState<number>(0);
+  const [path, setPath] = useState('');
+
+  useEffect(() => {
+    // Lấy đường dẫn hiện tại
+    const currentPath = router.pathname;
+    setPath(currentPath);
+  }, [router.pathname]);
+
   useEffect(() => {
     function handleScrollPosition() {
       const top = window.pageYOffset || document.documentElement.scrollTop;
@@ -136,7 +144,7 @@ export default function Navbar() {
             <Item isSelected={false}>
               <Link href="/checkout" className="!border-none flex items-center">
                 <FaOpencart />
-                <span className="text-sm ml-1">Giỏ Hàng</span>
+                <span className={`text-sm ml-1 ${path === '/checkout' ? 'text-orange' : 'text-white'}`}>Giỏ Hàng</span>
               </Link>
             </Item>
             <Item isSelected={false}>
