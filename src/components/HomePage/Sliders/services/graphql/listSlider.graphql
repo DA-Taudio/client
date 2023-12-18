@@ -9,5 +9,11 @@ query listSlider($input: ListSliderInput!) {
       type
       redirectUrl
     }
+    pagination {
+      totalPage
+      currentPage
+      pageSize
+    }
+    totalItem
   }
 }

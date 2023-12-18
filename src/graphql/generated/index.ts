@@ -231,6 +231,7 @@ export type FilterSliderInput = {
 };
 
 export type FilterVoucherInput = {
+  productIds?: InputMaybe<Array<Scalars['String']>>;
   status_eq?: InputMaybe<VoucherStatus>;
 };
 
@@ -1147,6 +1148,13 @@ export type ListCartQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ListCartQuery = { __typename?: 'Query', listCart: { __typename?: 'ListCartType', cart?: Array<{ __typename?: 'CartType', userId?: string | null, _id?: string | null, quantity?: number | null, productId?: string | null, status?: boolean | null, price?: number | null }> | null } };
 
+export type ListVoucherQueryVariables = Exact<{
+  input: ListVoucherInput;
+}>;
+
+
+export type ListVoucherQuery = { __typename?: 'Query', listVoucher: { __typename?: 'ListVoucherResponse', vouchers?: Array<{ __typename?: 'VoucherResponse', _id: string, code: string, percent: number, maxDiscount: number, quantity: number, maxUserUse: number, productIds: Array<string>, startTime: number, endTime: number, countHistory?: number | null, products?: Array<{ __typename?: 'ProductPayload', _id?: string | null, name?: string | null, price?: number | null, countInStock?: number | null, totalSold?: number | null, image?: { __typename?: 'Media', url?: string | null } | null }> | null }> | null } };
+
 export type RemoveFromCartMutationVariables = Exact<{
   input: RemoveFromCartInput;
 }>;
@@ -1213,7 +1221,7 @@ export type ListSliderQueryVariables = Exact<{
 }>;
 
 
-export type ListSliderQuery = { __typename?: 'Query', listSlider: { __typename?: 'ListSliderResponse', sliders?: Array<{ __typename?: 'SliderResponse', _id: string, position: number, type: SliderType, redirectUrl?: string | null, mediaId?: { __typename?: 'Media', url?: string | null } | null }> | null } };
+export type ListSliderQuery = { __typename?: 'Query', listSlider: { __typename?: 'ListSliderResponse', totalItem?: number | null, sliders?: Array<{ __typename?: 'SliderResponse', _id: string, position: number, type: SliderType, redirectUrl?: string | null, mediaId?: { __typename?: 'Media', url?: string | null } | null }> | null, pagination?: { __typename?: 'PaginationResponse', totalPage?: number | null, currentPage?: number | null, pageSize?: number | null } | null } };
 
 export type CreateConversationMutationVariables = Exact<{
   input: CreateConversationInput;
@@ -1563,6 +1571,48 @@ export const useListCartQuery = <
       fetcher<ListCartQuery, ListCartQueryVariables>(client, ListCartDocument, variables, headers),
       options
     );
+export const ListVoucherDocument = `
+    query listVoucher($input: ListVoucherInput!) {
+  listVoucher(input: $input) {
+    vouchers {
+      _id
+      code
+      percent
+      maxDiscount
+      quantity
+      maxUserUse
+      productIds
+      startTime
+      endTime
+      countHistory
+      products {
+        _id
+        name
+        price
+        countInStock
+        totalSold
+        image {
+          url
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListVoucherQuery = <
+      TData = ListVoucherQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ListVoucherQueryVariables,
+      options?: UseQueryOptions<ListVoucherQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ListVoucherQuery, TError, TData>(
+      ['listVoucher', variables],
+      fetcher<ListVoucherQuery, ListVoucherQueryVariables>(client, ListVoucherDocument, variables, headers),
+      options
+    );
 export const RemoveFromCartDocument = `
     mutation removeFromCart($input: RemoveFromCartInput!) {
   removeFromCart(input: $input) {
@@ -1817,6 +1867,12 @@ export const ListSliderDocument = `
       type
       redirectUrl
     }
+    pagination {
+      totalPage
+      currentPage
+      pageSize
+    }
+    totalItem
   }
 }
     `;

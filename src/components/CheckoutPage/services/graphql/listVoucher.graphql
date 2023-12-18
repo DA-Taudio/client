@@ -1,4 +1,4 @@
-query listVoucher($input: ListVoucherInput) {
+query listVoucher($input: ListVoucherInput!) {
   listVoucher(input: $input) {
     vouchers {
       _id
@@ -6,10 +6,21 @@ query listVoucher($input: ListVoucherInput) {
       percent
       maxDiscount
       quantity
+      maxUserUse
       productIds
       startTime
       endTime
       countHistory
+      products {
+        _id
+        name
+        price
+        countInStock
+        totalSold
+        image {
+          url
+        }
+      }
     }
   }
 }
