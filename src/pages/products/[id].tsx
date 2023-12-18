@@ -225,58 +225,10 @@ const DetailProduct = ({ data }: Props) => {
         <Description>{product?.description}</Description>
         <Price>{formatCurrency(product?.price)}</Price>
         <Details>
-          {product?.manufacturer && (
+          {product?.specification && (
             <DetailItem>
-              <DetailLabel>Thương hiệu:</DetailLabel>
-              <DetailValue>{product?.manufacturer}</DetailValue>
-            </DetailItem>
-          )}
-          {product?.type && (
-            <DetailItem>
-              <DetailLabel>Phân loại:</DetailLabel>
-              <DetailValue>{product.type}</DetailValue>
-            </DetailItem>
-          )}
-          {product?.modelNumber && (
-            <DetailItem>
-              <DetailLabel>Model:</DetailLabel>
-              <DetailValue>{product?.modelNumber}</DetailValue>
-            </DetailItem>
-          )}
-          {product?.dimensions && (
-            <DetailItem>
-              <DetailLabel>Kích thước:</DetailLabel>
-              <DetailValue>{product.dimensions}</DetailValue>
-            </DetailItem>
-          )}
-          {product?.weight && (
-            <DetailItem>
-              <DetailLabel>Trọng lượng:</DetailLabel>
-              <DetailValue>{product.weight}</DetailValue>
-            </DetailItem>
-          )}
-          {product.connectivity && (
-            <DetailItem>
-              <DetailLabel>Kết nối:</DetailLabel>
-              <DetailValue>{product.connectivity}</DetailValue>
-            </DetailItem>
-          )}
-          {product?.powerSource && (
-            <DetailItem>
-              <DetailLabel>Phương thức cấp điện:</DetailLabel>
-              <DetailValue>{product.powerSource}</DetailValue>
-            </DetailItem>
-          )}
-          {product?.compatibility && (
-            <DetailItem>
-              <DetailLabel>Ứng dụng tương thích:</DetailLabel>
-              <DetailValue>{product.compatibility}</DetailValue>
-            </DetailItem>
-          )}
-          {product?.warranty && (
-            <DetailItem>
-              <DetailLabel>Bảo hành:</DetailLabel>
-              <DetailValue>{product.warranty}</DetailValue>
+              <DetailLabel>Thông số kỹ thuật:</DetailLabel>
+              <DetailValue>{product?.specification}</DetailValue>
             </DetailItem>
           )}
         </Details>

@@ -265,6 +265,8 @@ export const Details = styled.div``;
 export const DetailItem = styled.p`
   font-size: 1.2rem;
   margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const DetailLabel = styled.span`
@@ -301,6 +303,7 @@ export const CountInStockLabel = styled.label`
 `;
 export const DetailValue = styled.span`
   color: #494949;
+  padding-left: 25px;
 `;
 export const DetailOfUsers = styled.span`
   color: #000000;
