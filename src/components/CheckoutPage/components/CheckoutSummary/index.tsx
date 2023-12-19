@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { formatPrice } from '@/utils/string';
-import { PaymentMethod, PaymentProvider, PaymentType } from '@/graphql/generated';
+import { PaymentMethod, PaymentProvider, PaymentType, VoucherStatus } from '@/graphql/generated';
 import AtmCardIcon from '@/components/Icon/atm_card';
 import RadioButton from '@/components/Radio';
 import CreaditCardIcon from '@/components/Icon/credit_card';
@@ -10,7 +10,8 @@ import { FaCreditCard, FaMoneyBill } from 'react-icons/fa';
 import useClearCart from '../../services/hooks/useClearCart';
 import Notification from '@/components/Notification';
 import { DoubleRightOutlined } from '@ant-design/icons';
-import { Modal } from 'antd';
+import { Button, Form, Modal, Radio } from 'antd';
+import { useListVoucher } from '../../services/hooks/useListVoucher';
 
 type Props = {
   onCheckout: (
@@ -33,7 +34,29 @@ const CheckoutSummary = (props: Props) => {
   const [paymentProvider, setPaymentProvider] = useState<PaymentProvider>(PaymentProvider.Zalopay);
   const [paymentType, setPaymentType] = useState<PaymentType>(PaymentType.Cc);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [input, setInput] = useState<any>({
+    filter: {},
+    pagination: {
+      limit: 0,
+      page: 1
+    }
+  });
 
+  const { listVoucher } = useListVoucher(input);
+
+  useEffect(() => {
+    const productIds = selectedItems.map(item => item.productId);
+    setInput({
+      filter: {
+        status_eq: VoucherStatus.Applying,
+        productIds
+      },
+      pagination: {
+        limit: 1000,
+        page: 1
+      }
+    });
+  }, [selectedItems]);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -217,9 +240,20 @@ const CheckoutSummary = (props: Props) => {
         </PrimaryButton>
       </div>
       <Modal title="Danh sách mã giảm giá hợp lệ " open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <Form name="radioForm" initialValues={{ radioGroup: 'A' }}>
+          <Form.Item name="radioGroup" label="Radio Group">
+            <Radio.Group>
+              {listVoucher?.map((item: any) => (
+                <Radio value={item._id}>{item.code}</Radio>
+              ))}
+              {/* Add more Radio components as needed */}
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item>
+            <Button htmlType="submit">Submit</Button>
+          </Form.Item>
+        </Form>
       </Modal>
     </>
   );
