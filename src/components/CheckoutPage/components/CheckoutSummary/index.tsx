@@ -12,13 +12,18 @@ import Notification from '@/components/Notification';
 import { DoubleRightOutlined } from '@ant-design/icons';
 import { Button, Form, Modal, Radio } from 'antd';
 import { useListVoucher } from '../../services/hooks/useListVoucher';
+import { RiCoupon2Line } from 'react-icons/ri';
+import moment from 'moment';
+import useApplyVouchers from '../../services/hooks/useApplyVoucher';
+import useVoucherStore from '@/store/useVoucherStore';
 
 type Props = {
   onCheckout: (
     paymentMethod: PaymentMethod,
     shippingAddress: string,
     paymentProvider: PaymentProvider,
-    paymentType: PaymentType
+    paymentType: PaymentType,
+    couponCode?: any[]
   ) => void;
   selectedItems: any[];
   isLoading: boolean;
@@ -26,6 +31,7 @@ type Props = {
 };
 
 const CheckoutSummary = (props: Props) => {
+  const [form] = Form.useForm();
   const { handleClearCart } = useClearCart();
   const { selectedItems, onCheckout, isLoading, address } = props;
   const total = (selectedItems || [])?.reduce((total, item) => total + (item?.price || 0) * item.quantity, 0);
@@ -41,15 +47,34 @@ const CheckoutSummary = (props: Props) => {
       page: 1
     }
   });
+  const [couponCode, setCouponCode] = useState<any>(null);
+  const { setVoucherData, voucher } = useVoucherStore(store => store) as any;
 
   const { listVoucher } = useListVoucher(input);
+  const { handleApplyVouchers, handleApplyVouchersMax } = useApplyVouchers();
+  const { voucher: applyVoucher } = useVoucherStore(store => store) as any;
+  useEffect(() => {
+    if (listVoucher?.length > 0) {
+      listVoucher.map(item => {
+        handleApplyVouchersMax({
+          couponCode: [item.code],
+          items: selectedItems?.map((item: any) => ({
+            id: item?.productId,
+            quantity: item?.quantity || 1
+          }))
+        });
+      });
+    } else {
+      // setVoucherData(null);
+    }
+  }, [listVoucher]);
 
   useEffect(() => {
     const productIds = selectedItems.map(item => item.productId);
     setInput({
       filter: {
         status_eq: VoucherStatus.Applying,
-        productIds
+        productIds: [...productIds, '658263e5cd92bffdc1459436']
       },
       pagination: {
         limit: 1000,
@@ -57,17 +82,25 @@ const CheckoutSummary = (props: Props) => {
       }
     });
   }, [selectedItems]);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
+  const handleOk = (values: any) => {
+    if (values?.couponCode) {
+      setCouponCode([values.couponCode]);
+      handleApplyVouchers({
+        couponCode: [values.couponCode],
+        items: selectedItems?.map((item: any) => ({
+          id: item?.productId,
+          quantity: item?.quantity || 1
+        }))
+      });
+    }
     setIsModalOpen(false);
   };
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
   const handleChange = (e: any) => {
     setShippingAddress(e.target.value);
   };
@@ -77,7 +110,7 @@ const CheckoutSummary = (props: Props) => {
       Notification.Info('Vui lòng điền địa chỉ nhận hàng!');
     } else {
       handleClearCart();
-      onCheckout(paymentMethod, shippingAddress, paymentProvider, paymentType);
+      onCheckout(paymentMethod, shippingAddress, paymentProvider, paymentType, couponCode);
     }
   };
 
@@ -94,9 +127,21 @@ const CheckoutSummary = (props: Props) => {
               Chọn Mã Giảm Giá <DoubleRightOutlined className="ml-2" />
             </button>
           </div>
-          <div className="text-red text-md  ">
-            <input type="text" name="voucher" value={''} className="p-2 w-11/12" />
-          </div>
+
+          {applyVoucher && couponCode && (
+            <div className="text-red text-md mt-2 ">
+              <p className="text-sm text-gray-500">
+                Voucher <span className="text-black italic font-bold">{couponCode[0]}</span> đang được áp dụng
+              </p>
+              <p className="text-sm text-gray-500">
+                Số tiền giảm giá:{' '}
+                <span className="text-black italic font-bold">
+                  {formatPrice(applyVoucher.discountAmount)}
+                  <span className="text-xs underline">đ</span>
+                </span>
+              </p>
+            </div>
+          )}
         </div>
         <div className="flex flex-col mb-7 text-[15px]">
           <div className="uppercase font-bold mb-1">Địa chỉ nhận hàng</div>
@@ -107,9 +152,22 @@ const CheckoutSummary = (props: Props) => {
 
         <div className="flex justify-between">
           <div className="uppercase font-bold">Tổng thanh toán</div>
-          <div className=" bg-white px-5 font-bold text-[md] text-[#DC0000]">
-            {formatPrice(total)}
-            <span className="text-xs underline">đ</span>
+          <div className="flex flex-col text-right bg-white px-5 font-bold text-[md] ]">
+            <span>
+              {formatPrice(total)}
+              <span className="text-xs underline">đ</span>
+            </span>
+            {applyVoucher?.discountAmount && (
+              <>
+                <span>
+                  - {formatPrice(applyVoucher.discountAmount)} <span className="text-xs underline">đ</span>
+                </span>
+                <span className="text-red-500">
+                  = {formatPrice(total - applyVoucher.discountAmount)}
+                  <span className="text-xs underline">đ</span>
+                </span>
+              </>
+            )}
           </div>
         </div>
         <div className="flex flex-col mt-5">
@@ -239,19 +297,27 @@ const CheckoutSummary = (props: Props) => {
           {isLoading ? 'Đang xử lý...' : 'Thanh toán'}
         </PrimaryButton>
       </div>
-      <Modal title="Danh sách mã giảm giá hợp lệ " open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <Form name="radioForm" initialValues={{ radioGroup: 'A' }}>
-          <Form.Item name="radioGroup" label="Radio Group">
-            <Radio.Group>
+      <Modal title="Danh sách mã giảm giá hợp lệ " open={isModalOpen} footer={null}>
+        <Form name="radioForm" initialValues={{}} onFinish={handleOk}>
+          <Form.Item name="couponCode">
+            <Radio.Group className="flex flex-col ">
               {listVoucher?.map((item: any) => (
-                <Radio value={item._id}>{item.code}</Radio>
+                <Radio value={item.code} className=" mt-2" key={item._id}>
+                  <div className="flex items-center">
+                    <RiCoupon2Line className="h-full w-10 text-pink-500" />
+                    <span className="ml-2 text-xl">{item.code}</span>
+                    <span className="ml-5 text-xl text-gray-500 ">{item.percent}%</span>
+                    <span className="ml-5 text-gray-500 italic">
+                      Hết hạn: {moment(item.endTime).format('YYYY-MM-DD HH:mm:ss')}
+                    </span>
+                  </div>
+                </Radio>
               ))}
               {/* Add more Radio components as needed */}
             </Radio.Group>
           </Form.Item>
-
-          <Form.Item>
-            <Button htmlType="submit">Submit</Button>
+          <Form.Item className="flex justify-end">
+            <Button htmlType="submit">OK</Button>
           </Form.Item>
         </Form>
       </Modal>

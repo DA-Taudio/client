@@ -78,7 +78,8 @@ const useCheckout = () => {
       paymentMethod: PaymentMethod,
       shippingAddress: string,
       paymentProvider: PaymentProvider,
-      paymentType: PaymentType
+      paymentType: PaymentType,
+      couponCode?: any
     ) => {
       createPaymentMutate({
         input: {
@@ -90,7 +91,8 @@ const useCheckout = () => {
           paymentMethod,
           shippingAddress,
           paymentProvider,
-          paymentType
+          paymentType,
+          couponCode
         }
       });
     },

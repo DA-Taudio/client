@@ -1,0 +1,10 @@
+mutation applyVouchers($input: ApplyVouchersInput!) {
+  applyVouchers(input: $input) {
+    discountAmount
+    info {
+      code
+      reducedAmount
+      voucherId
+    }
+  }
+}

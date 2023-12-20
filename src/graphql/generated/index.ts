@@ -1047,7 +1047,7 @@ export type VoucherResponse = {
   maxUserUse: Scalars['Float'];
   percent: Scalars['Float'];
   productIds: Array<Scalars['String']>;
-  products?: Maybe<Array<ProductPayload>>;
+  products?: Maybe<Array<Maybe<ProductPayload>>>;
   quantity: Scalars['Float'];
   startTime: Scalars['Float'];
 };
@@ -1131,6 +1131,13 @@ export type AddToCartMutationVariables = Exact<{
 
 export type AddToCartMutation = { __typename?: 'Mutation', addToCart: { __typename?: 'BooleanPayload', success?: boolean | null } };
 
+export type ApplyVouchersMutationVariables = Exact<{
+  input: ApplyVouchersInput;
+}>;
+
+
+export type ApplyVouchersMutation = { __typename?: 'Mutation', applyVouchers: { __typename?: 'ApplyVouchersResponse', discountAmount: number, info: Array<{ __typename?: 'InfoApply', code?: string | null, reducedAmount?: number | null, voucherId?: string | null }> } };
+
 export type ClearCartMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1153,7 +1160,7 @@ export type ListVoucherQueryVariables = Exact<{
 }>;
 
 
-export type ListVoucherQuery = { __typename?: 'Query', listVoucher: { __typename?: 'ListVoucherResponse', vouchers?: Array<{ __typename?: 'VoucherResponse', _id: string, code: string, percent: number, maxDiscount: number, quantity: number, maxUserUse: number, productIds: Array<string>, startTime: number, endTime: number, countHistory?: number | null, products?: Array<{ __typename?: 'ProductPayload', _id?: string | null, name?: string | null, price?: number | null, countInStock?: number | null, totalSold?: number | null, image?: { __typename?: 'Media', url?: string | null } | null }> | null }> | null } };
+export type ListVoucherQuery = { __typename?: 'Query', listVoucher: { __typename?: 'ListVoucherResponse', vouchers?: Array<{ __typename?: 'VoucherResponse', _id: string, code: string, percent: number, maxDiscount: number, quantity: number, maxUserUse: number, productIds: Array<string>, startTime: number, endTime: number, countHistory?: number | null, products?: Array<{ __typename?: 'ProductPayload', _id?: string | null, name?: string | null, price?: number | null, countInStock?: number | null, totalSold?: number | null, image?: { __typename?: 'Media', url?: string | null } | null } | null> | null }> | null } };
 
 export type RemoveFromCartMutationVariables = Exact<{
   input: RemoveFromCartInput;
@@ -1500,6 +1507,31 @@ export const useAddToCartMutation = <
     useMutation<AddToCartMutation, TError, AddToCartMutationVariables, TContext>(
       ['addToCart'],
       (variables?: AddToCartMutationVariables) => fetcher<AddToCartMutation, AddToCartMutationVariables>(client, AddToCartDocument, variables, headers)(),
+      options
+    );
+export const ApplyVouchersDocument = `
+    mutation applyVouchers($input: ApplyVouchersInput!) {
+  applyVouchers(input: $input) {
+    discountAmount
+    info {
+      code
+      reducedAmount
+      voucherId
+    }
+  }
+}
+    `;
+export const useApplyVouchersMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<ApplyVouchersMutation, TError, ApplyVouchersMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<ApplyVouchersMutation, TError, ApplyVouchersMutationVariables, TContext>(
+      ['applyVouchers'],
+      (variables?: ApplyVouchersMutationVariables) => fetcher<ApplyVouchersMutation, ApplyVouchersMutationVariables>(client, ApplyVouchersDocument, variables, headers)(),
       options
     );
 export const ClearCartDocument = `
