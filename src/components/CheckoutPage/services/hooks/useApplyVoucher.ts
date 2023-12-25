@@ -26,7 +26,9 @@ const useApplyVouchers = () => {
 
   const { mutate: applyVouchersMax } = useApplyVouchersMutation(graphqlClientRequest(true), {
     onSuccess: data => {
-      if (voucher && data?.applyVouchers?.discountAmount > voucher?.discountAmount) setVoucherData(data?.applyVouchers);
+      if (!voucher || data?.applyVouchers?.discountAmount > voucher?.discountAmount) {
+        setVoucherData(data?.applyVouchers);
+      }
     },
     onError: error => {
       showErrorMessage(error);

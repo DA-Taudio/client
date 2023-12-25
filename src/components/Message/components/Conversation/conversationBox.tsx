@@ -50,7 +50,6 @@ const ConversationBox = ({ props }: any) => {
   useEffect(() => {
     if (socket) {
       socket.on('message', (data: Message) => {
-        console.log(data);
         setMessageOfUsers(prevMessages => [
           ...prevMessages,
           {

@@ -48,12 +48,13 @@ const CheckoutSummary = (props: Props) => {
     }
   });
   const [couponCode, setCouponCode] = useState<any>(null);
-  const { setVoucherData, voucher } = useVoucherStore(store => store) as any;
 
   const { listVoucher } = useListVoucher(input);
   const { handleApplyVouchers, handleApplyVouchersMax } = useApplyVouchers();
-  const { voucher: applyVoucher } = useVoucherStore(store => store) as any;
+  const { voucher, setVoucherData } = useVoucherStore(store => store) as any;
   useEffect(() => {
+    setVoucherData(null);
+
     if (listVoucher?.length > 0) {
       listVoucher.map(item => {
         handleApplyVouchersMax({
@@ -64,8 +65,6 @@ const CheckoutSummary = (props: Props) => {
           }))
         });
       });
-    } else {
-      // setVoucherData(null);
     }
   }, [listVoucher]);
 
@@ -128,15 +127,15 @@ const CheckoutSummary = (props: Props) => {
             </button>
           </div>
 
-          {applyVoucher && couponCode && (
+          {voucher && (
             <div className="text-red text-md mt-2 ">
               <p className="text-sm text-gray-500">
-                Voucher <span className="text-black italic font-bold">{couponCode[0]}</span> đang được áp dụng
+                Voucher <span className="text-black italic font-bold">{voucher?.info[0]?.code}</span> đang được áp dụng
               </p>
               <p className="text-sm text-gray-500">
                 Số tiền giảm giá:{' '}
                 <span className="text-black italic font-bold">
-                  {formatPrice(applyVoucher.discountAmount)}
+                  {formatPrice(voucher.discountAmount)}
                   <span className="text-xs underline">đ</span>
                 </span>
               </p>
@@ -157,13 +156,13 @@ const CheckoutSummary = (props: Props) => {
               {formatPrice(total)}
               <span className="text-xs underline">đ</span>
             </span>
-            {applyVoucher?.discountAmount && (
+            {voucher?.discountAmount && (
               <>
                 <span>
-                  - {formatPrice(applyVoucher.discountAmount)} <span className="text-xs underline">đ</span>
+                  - {formatPrice(voucher.discountAmount)} <span className="text-xs underline">đ</span>
                 </span>
                 <span className="text-red-500">
-                  = {formatPrice(total - applyVoucher.discountAmount)}
+                  = {formatPrice(total - voucher.discountAmount)}
                   <span className="text-xs underline">đ</span>
                 </span>
               </>
@@ -297,8 +296,21 @@ const CheckoutSummary = (props: Props) => {
           {isLoading ? 'Đang xử lý...' : 'Thanh toán'}
         </PrimaryButton>
       </div>
-      <Modal title="Danh sách mã giảm giá hợp lệ " open={isModalOpen} footer={null}>
-        <Form name="radioForm" initialValues={{}} onFinish={handleOk}>
+      <Modal
+        title="Danh sách mã giảm giá hợp lệ "
+        open={isModalOpen}
+        footer={null}
+        onCancel={() => {
+          setIsModalOpen(false);
+        }}
+      >
+        <Form
+          name="radioForm"
+          initialValues={{
+            ...(voucher && { couponCode: voucher?.info[0].code })
+          }}
+          onFinish={handleOk}
+        >
           <Form.Item name="couponCode">
             <Radio.Group className="flex flex-col ">
               {listVoucher?.map((item: any) => (
