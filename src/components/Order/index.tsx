@@ -16,8 +16,8 @@ const customStyles = {
   },
   headRow: {
     style: {
-      backgroundColor: 'black',
-      color: 'white'
+      backgroundColor: '#EBEEEB',
+      color: 'black'
     }
   },
   headCells: {
@@ -52,7 +52,7 @@ const Order = () => {
         <div>
           {row?.items?.map((obj: any) => (
             <Link href={'/products/' + obj.id._id} className="flex ư" key={obj.id._id}>
-              <div className="w-2 h-2 rounded-full bg-black my-auto mr-1"> </div>
+              <div className="w-2 h-2 rounded-full  my-auto mr-1"> </div>
               <ImageItem src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}${obj?.id?.image?.url || ''}`} />
               {/* <div className="ml-2 text-blue-700 text-sm">{obj.id.name}</div> */}
             </Link>
@@ -92,9 +92,9 @@ const Order = () => {
       selector: (row: any) => (
         <div className="text-white  text-sm  ">
           {row.shippingStatus === ShippingStatus.NotShipped ? (
-            <span className="bg-yellow-600 p-5">Đơn hàng đang chờ xét duyệt</span>
+            <span className="bg-yellow-600 p-5">Chờ xét duyệt</span>
           ) : row.shippingStatus === ShippingStatus.Shipping ? (
-            <span className="bg-green-600 p-5">Đơn hàng đang được vận chuyển</span>
+            <span className="bg-green-600 p-5">Đang được vận chuyển</span>
           ) : (
             'Đơn hàng đã được giao'
           )}
@@ -120,10 +120,10 @@ const Order = () => {
   };
 
   return (
-    <div className="flex justify-between flex-col p-28 pb-40 mb-12 ">
-      <div className="text-2xl mt-4 mb-4 text-orange-500">Đơn Hàng Của Bạn</div>
+    <div className="flex justify-between flex-col p-28 pb-40 mb-12 pt-52 ">
+      <div className="text-xl font-bold mt-4 mb-4 text-black">ĐƠN HÀNG CỦA BẠN</div>
       <input
-        className="py-4 px-4 w-2/4 outline-none mb-12"
+        className="py-3 px-4 w-2/4 outline-none mb-12 border border-gray-600 rounded-md"
         type="text"
         placeholder="Tìm kiếm..."
         onChange={handleFilter}

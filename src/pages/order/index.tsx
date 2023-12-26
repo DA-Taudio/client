@@ -3,7 +3,7 @@ import React from 'react';
 
 const OrderPage = () => {
   return (
-    <div className="bg-slate-700">
+    <div className="bg-white min-h-screen">
       <Order />
     </div>
   );

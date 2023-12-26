@@ -69,6 +69,14 @@ const CheckoutSummary = (props: Props) => {
   }, [listVoucher]);
 
   useEffect(() => {
+    if (voucher)
+      handleApplyVouchers({
+        couponCode: [voucher?.info[0]?.code],
+        items: selectedItems?.map((item: any) => ({
+          id: item?.productId,
+          quantity: item?.quantity || 1
+        }))
+      });
     const productIds = selectedItems.map(item => item.productId);
     setInput({
       filter: {
