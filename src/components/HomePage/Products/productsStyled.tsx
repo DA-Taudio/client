@@ -246,7 +246,7 @@ export const Title = styled.h1`
   margin-top: 0.2rem;
 `;
 
-export const Description = styled.p`
+export const Description = styled.pre`
   font-size: 1.3rem;
   margin: 2rem 0;
 `;
@@ -301,7 +301,7 @@ export const CountInStockLabel = styled.label`
   color: #615f5f;
   margin-left: 2.8rem;
 `;
-export const DetailValue = styled.span`
+export const DetailValue = styled.pre`
   color: #494949;
   padding-left: 25px;
 `;
