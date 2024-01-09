@@ -1,5 +1,5 @@
 overwrite: true
-schema: http://localhost:8000/graphql
+schema: https://be.tqtien.id.vn/graphql
 documents: 'src/**/*.graphql'
 generates:
   src/graphql/generated/index.ts:
