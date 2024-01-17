@@ -40,17 +40,17 @@ const PaymentStatus = () => {
   }, []);
 
   return (
-    <div className="bg-slate-500">
+    <div className="bg-white min-h-screen">
       {status === 'success' && (
         <InnerContainer1>
-          <Image className="icon" src={statusSuccess} alt="success" width={100} height={100} />
+          {/* <Image className="icon" src={statusSuccess} alt="success" width={100} height={100} /> */}
           <Head>
             <title>THANH TOÁN THÀNH CÔNG!</title>
           </Head>
           <p className="status">THANH TOÁN THÀNH CÔNG!</p>
-          <p className="first">Cảm ơn bạn đã mua sản phẩm tại NK SHOP.</p>
+          <p className="first">Cảm ơn bạn đã mua sản phẩm tại T-Audio.</p>
           <p className="second">
-            Thông tin đơn hàng đã được gửi tới Tài khoản NK SHOP của bạn, vui lòng truy cập tại{' '}
+            Thông tin đơn hàng đã được gửi tới Tài khoản T-Audio của bạn, vui lòng truy cập tại{' '}
             <span style={{ cursor: 'pointer' }}>ĐÂY</span>
           </p>
           <p className="third">Chúc bạn có những phút giây thư giãn thưởng thức chương trình.</p>
