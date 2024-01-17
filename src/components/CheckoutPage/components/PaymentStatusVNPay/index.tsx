@@ -5,6 +5,7 @@ import { InnerContainer1, InnerContainer2 } from './styled';
 import { useRouter } from 'next/router';
 import useCartStore from '@/store/useCartStore';
 import Head from 'next/head';
+import Link from 'next/link';
 
 const backgroundSuccess = '/images/checkout/background-5.svg';
 const backgroundError = '/images/checkout/background-6.svg';
@@ -51,7 +52,9 @@ const PaymentStatus = () => {
           <p className="first">Cảm ơn bạn đã mua sản phẩm tại T-Audio.</p>
           <p className="second">
             Thông tin đơn hàng đã được gửi tới Tài khoản T-Audio của bạn, vui lòng truy cập tại{' '}
-            <span style={{ cursor: 'pointer' }}>ĐÂY</span>
+            <Link href={'/'}>
+              <span style={{ cursor: 'pointer' }}>ĐÂY</span>
+            </Link>{' '}
           </p>
           <p className="third">Chúc bạn có những phút giây thư giãn thưởng thức chương trình.</p>
         </InnerContainer1>
