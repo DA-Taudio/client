@@ -246,7 +246,7 @@ export const Title = styled.h1`
   margin-top: 0.2rem;
 `;
 
-export const Description = styled.pre`
+export const Description = styled.p`
   font-size: 1.3rem;
   margin: 2rem 0;
 `;
