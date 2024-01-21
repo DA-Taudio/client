@@ -1,6 +1,6 @@
 import { GetListProductDocument, GetProductDocument } from '@/graphql/generated';
 import { graphqlClientRequest } from '@/graphql/services/graphql-client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import { BsCartPlus, BsChevronDown, BsChevronUp } from 'react-icons/bs';
@@ -78,7 +78,7 @@ export async function getStaticPaths() {
   });
   return {
     paths,
-    fallback: false
+    fallback: true
   };
 }
 
@@ -104,12 +104,20 @@ export async function getStaticProps({ params }: any) {
 }
 
 const DetailProduct = ({ data }: Props) => {
+  const router = useRouter();
+  const product = data?.getProduct?.product;
+
+  useEffect(() => {
+    if (!data || !data?.getProduct?.product) {
+      router.push('/404');
+    }
+  }, [data, router]);
+
   const openModal = useModalStore((state: any) => state.openModal);
   const { user } = useUserStore(store => store) as UserStore;
   const { addItem, setDirectBuy, clear } = useCartStore((store: any) => store);
   const { handleFavoriteProduct, favoriteProductLoading } = useFavoriteProduct();
   const { handleAddToCart } = useAddToCart();
-  const router = useRouter();
 
   let imageUser;
   if (user?.avatarId?.url) {
@@ -117,7 +125,6 @@ const DetailProduct = ({ data }: Props) => {
   } else {
     imageUser = '/images/account/default-avatar-image.jpg';
   }
-  const product = data?.getProduct?.product;
   const [productId, setProductId] = useState(product?._id);
   const { listComment, isLoading } = useListComment({ id: productId });
   const { handleCreateComment } = useCreateComment();
@@ -162,12 +169,12 @@ const DetailProduct = ({ data }: Props) => {
     e.preventDefault();
 
     if (user) {
-      if (product.countInStock === 0) {
+      if (product?.countInStock === 0) {
         Notification.Info('Đã hết hàng, vui lòng quay lại sau!');
       } else {
         clear();
         setDirectBuy(true);
-        addItem({ productId, quantity, status: true, price: product.price });
+        addItem({ productId, quantity, status: true, price: product?.price });
         router.push('/checkout');
       }
     } else {
@@ -179,7 +186,7 @@ const DetailProduct = ({ data }: Props) => {
     e.preventDefault();
 
     if (user) {
-      if (product.countInStock === 0) {
+      if (product?.countInStock === 0) {
         Notification.Info('Đã hết hàng, vui lòng quay lại sau!');
       } else {
         handleAddToCart({
@@ -192,6 +199,7 @@ const DetailProduct = ({ data }: Props) => {
       openModal(StoreModal.LOGIN);
     }
   };
+  if (!product) return <div>Not found</div>;
 
   return (
     <DetailProductContainer>
