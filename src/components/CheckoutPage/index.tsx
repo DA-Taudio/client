@@ -10,6 +10,7 @@ import CheckoutSummary from './components/CheckoutSummary';
 export const RowContainer = styled.div`
   padding-left: ${pixel2vw(43)};
   padding-right: ${pixel2vw(43)};
+  background-color: #e7eaeb !important;
 `;
 export const GradientLine = styled.div`
   /* linenear_icon */
